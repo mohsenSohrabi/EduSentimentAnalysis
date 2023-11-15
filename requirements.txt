@@ -1,0 +1,5 @@
+transformers >= 4.34, < 4.36
+torchinfo >= 1.8, < 1.9
+accelerate >= 0.24, < 0.25
+peft >= 0.6, < 0.7
+torch>=2.1 , <2.2
