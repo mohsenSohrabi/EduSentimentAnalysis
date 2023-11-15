@@ -1,0 +1,23 @@
+# Ignore everything in the 'env' directory
+env/
+
+# Ignore all notebook files
+*.ipynb
+
+# Ignore all checkpoint files created by Jupyter
+*.ipynb_checkpoints/
+
+# Ignore all .pyc files (compiled Python files)
+*.pyc
+
+# Ignore all .pyo files (optimized Python files)
+*.pyo
+
+# Ignore all .pyd files (Python script made into Windows dll)
+*.pyd
+
+# Ignore all .so files (shared object library)
+*.so
+
+# Ignore all .DS_Store files (Mac OS folder settings)
+.DS_Store
