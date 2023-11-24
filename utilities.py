@@ -2,6 +2,7 @@ import requests
 from tqdm import tqdm
 import pandas as pd
 import os
+import numpy as np
 
 def download_file_from_google_drive(id, destination):
     '''
@@ -100,30 +101,34 @@ def save_response_content(response, destination):
 
 #------------------------------------
 
-def transform_csv_for_huggingface(dataset_path, destination='reviews_hf.csv'):
-    '''
-    This function transforms a CSV file to be compatible with Hugging Face's datasets library.
+def transform_csv_for_huggingface(dataset_path, p = 0.25):
+    """
+    Transforms a CSV file for use with the Hugging Face library.
 
-    The function performs the following operations:
-    1. Reads the CSV file located at `dataset_path` into a pandas DataFrame.
-    2. Renames the 'Label' column to 'label' to adhere to Hugging Face's naming conventions.
-    3. Subtracts 1 from all values in the 'label' column. This is done because Hugging Face's datasets library expects labels to start from 0.
-    4. Drops the 'Id' column as it is not needed for training.
-    5. Writes the transformed DataFrame back to a CSV file named 'reviews_hf.csv'. The index is not included in the output file.
+    This function reads a CSV file, renames the 'Label' column to 'label', 
+    subtracts 1 from all the labels, drops the 'Id' column, and splits the 
+    DataFrame into a training set and a test set. The split is determined by 
+    the parameter p, which represents the proportion of the DataFrame to be 
+    used for the training set. The function then saves the training and test 
+    sets as separate CSV files.
 
     Args:
-        dataset_path (str): The path to the original CSV file.
-        destination: The path to save result file
+        dataset_path (str): The path to the CSV file.
+        p (float, optional): The proportion of the DataFrame to be used for 
+            the training set. Defaults to 0.25.
+
     Returns:
-        None. The function writes the transformed DataFrame to a CSV file.
-    '''
-    # Check if the file already exists
-    if os.path.exists(destination):
-        print("Proccessed file already exists.")
-        return
+        None. The function saves the training and test sets as 'review_df_train.csv' 
+        and 'review_df_test.csv', respectively.
+    """
     review_df = pd.read_csv(dataset_path)
     # it is necessary to convert the Label to label
     review_df = review_df.rename(columns={'Label':'label'})
     review_df['label'] = review_df['label'] - 1
     review_df = review_df.drop('Id',axis=1)
-    review_df.to_csv(destination,index=None)
+    n = int(np.floor(p * review_df.shape[0]))
+    review_df_train = review_df.iloc[:n]
+    review_df_test = review_df.iloc[n:]
+
+    review_df_train.to_csv('review_train.csv',index=None)
+    review_df_test.to_csv('review_test.csv',index=None)

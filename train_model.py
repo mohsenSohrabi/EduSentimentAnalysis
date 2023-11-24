@@ -31,10 +31,10 @@ download_file_from_google_drive(id=FILE_ID, destination=DATASET_SAVE_PATH)
 
 # Convert the data in a format suitable for Huggingface
 transform_csv_for_huggingface(dataset_path=DATASET_SAVE_PATH, 
-                              destination= DATSET_SUITABLE_FOR_HF_NAME) 
+                              destination= DATSET_SUITABLE_FOR_TRAIN_NAME) 
 
 # load dataset using datasets library from huggingface
-review_data_raw = load_dataset('csv',data_files=DATSET_SUITABLE_FOR_HF_NAME)
+review_data_raw = load_dataset('csv',data_files=DATSET_SUITABLE_FOR_TRAIN_NAME)
 
 # This line of code splits the 'train' subset of the 'review_data_raw' dataset into a training set and a test set. 
 # The 'test_size' parameter is set to 0.2, meaning that 20% of the data will be used for the test set, 
