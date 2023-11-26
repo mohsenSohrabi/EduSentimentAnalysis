@@ -21,3 +21,28 @@ env/
 
 # Ignore all .DS_Store files (Mac OS folder settings)
 .DS_Store
+
+checkpoint-*/
+
+Results/
+checkpoint-2676/config.json
+checkpoint-2676/model.safetensors
+checkpoint-2676/optimizer.pt
+checkpoint-2676/rng_state.pth
+checkpoint-2676/scheduler.pt
+checkpoint-2676/special_tokens_map.json
+checkpoint-2676/tokenizer_config.json
+checkpoint-2676/trainer_state.json
+checkpoint-2676/training_args.bin
+checkpoint-2676/vocab.txt
+checkpoint-804/config.json
+checkpoint-804/model.safetensors
+checkpoint-804/optimizer.pt
+checkpoint-804/rng_state.pth
+checkpoint-804/scheduler.pt
+checkpoint-804/special_tokens_map.json
+checkpoint-804/tokenizer_config.json
+checkpoint-804/trainer_state.json
+checkpoint-804/training_args.bin
+checkpoint-804/vocab.txt
+Results/checkpoint-2676.zip
