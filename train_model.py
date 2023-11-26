@@ -5,11 +5,7 @@ from  transformers import (
                             TrainingArguments,
                             )
 import pandas as pd
-from peft import (
-                  PeftModel, 
-                  PeftConfig,
-                  get_peft_model,
-                  LoraConfig)
+
 
 from utilities import (
                         download_file_from_google_drive,
@@ -31,7 +27,7 @@ download_file_from_google_drive(id=FILE_ID, destination=DATASET_SAVE_PATH)
 
 # Convert the data in a format suitable for Huggingface
 transform_csv_for_huggingface(dataset_path=DATASET_SAVE_PATH, 
-                              destination= DATSET_SUITABLE_FOR_TRAIN_NAME) 
+                              destination= DATSET_SUITABLE_FOR_TRAIN_NAME, p=0.5) 
 
 # load dataset using datasets library from huggingface
 review_data_raw = load_dataset('csv',data_files=DATSET_SUITABLE_FOR_TRAIN_NAME)
@@ -50,17 +46,6 @@ review_data_tokenized = review_data_split.map(lambda batch:
 # The 'num_labels' parameter is set to 5, indicating that the model should be configured to output 5 different classes.
 model = DistilBertForSequenceClassification.from_pretrained(BASE_CHECKPOINT,num_labels=5)
 
-# Create a configuration for the PEFT (Progressive Embedding Fine-Tuning) method.
-# The 'task_type' is set to "SEQ_CLS" for sequence classification tasks.
-# The 'r' parameter is set to 4, which is the rank of the low-rank approximation in PEFT.
-# The 'lora_alpha' parameter is set to 32, which is the scaling factor for the low-rank approximation in PEFT.
-# The 'lora_dropout' parameter is set to 0.01, which is the dropout rate for the low-rank approximation in PEFT.
-# The 'target_modules' parameter is set to ['q_lin'], which means that the PEFT method will be applied to the 'q_lin' module of the model.
-peft_config = LoraConfig(task_type="SEQ_CLS", r=4, lora_alpha=32, lora_dropout=0.01, target_modules=['q_lin'])
-
-# Apply the PEFT method to the model using the specified configuration.
-# The 'get_peft_model' function returns a new model that has been modified according to the PEFT configuration.
-model = get_peft_model(model, peft_config)
 
 # Print the names and shapes of the trainable parameters of the model.
 # This is useful for understanding the structure of the model and for debugging.
