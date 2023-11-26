@@ -1,4 +1,4 @@
-# Sentiment Analysis for Educational Reviews
+# DistilBERT-based Sentiment Analysis for Educational Reviews
 
 This project involves fine-tuning a DistilBERT model on student reviews provided by Coursera. The model is trained to perform sentiment analysis on the reviews, classifying them based on the sentiment expressed.
 
